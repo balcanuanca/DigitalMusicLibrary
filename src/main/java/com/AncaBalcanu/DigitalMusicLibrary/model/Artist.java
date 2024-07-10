@@ -1,9 +1,6 @@
 package com.AncaBalcanu.DigitalMusicLibrary.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -15,6 +12,6 @@ public class Artist {
     @GeneratedValue
     private Long id;
     private String name;
-    @OneToMany(mappedBy="artist")
+    @OneToMany(mappedBy="artist", cascade = CascadeType.ALL)
     private List<Album> albums;
 }

@@ -12,12 +12,13 @@ public class Album {
     @Id
     @GeneratedValue
     private Long id;
-    @Embedded
+ //   @Embedded
     @ManyToOne
     @JoinColumn(name="artist_id")
     private Artist artist;
     private String title;
-    @OneToMany(mappedBy="album")
+    @OneToMany(mappedBy="album", cascade = CascadeType.ALL)
     private List<Song> songs;
+    @Column(length = 2000)
     private String description;
 }

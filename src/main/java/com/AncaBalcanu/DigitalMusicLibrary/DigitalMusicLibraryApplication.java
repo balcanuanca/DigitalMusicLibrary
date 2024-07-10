@@ -1,6 +1,8 @@
 package com.AncaBalcanu.DigitalMusicLibrary;
 
+import com.AncaBalcanu.DigitalMusicLibrary.data.ArtistRepository;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Artist;
+import com.AncaBalcanu.DigitalMusicLibrary.service.ArtistService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -16,20 +18,26 @@ import java.util.List;
 @SpringBootApplication
 public class DigitalMusicLibraryApplication {
 
+	private ArtistService artistService;
+
+	public DigitalMusicLibraryApplication(ArtistService artistService) {
+		this.artistService = artistService;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(DigitalMusicLibraryApplication.class, args);
 	}
 
-	@Bean
+	// Read json and write to DB
+	//@Bean
 	CommandLineRunner runner() {
 		return args -> {
-			// read json and write to db
 			ObjectMapper mapper = new ObjectMapper();
 			TypeReference<List<Artist>> typeReference = new TypeReference<List<Artist>>(){};
 			InputStream inputStream = TypeReference.class.getResourceAsStream("/static/data.json");
 			try {
 				List<Artist> artists = mapper.readValue(inputStream,typeReference);
-//				userService.save(users);
+				artistService.saveAll(artists);
 				System.out.println("Artists Saved!");
 				System.out.println(artists);
 			} catch (IOException e){
