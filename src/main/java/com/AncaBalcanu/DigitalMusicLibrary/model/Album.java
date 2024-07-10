@@ -1,23 +1,22 @@
 package com.AncaBalcanu.DigitalMusicLibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
 public class Album {
     @Id
     @GeneratedValue
+    @Column(name = "albumId")
     private Long id;
- //   @Embedded
-    @ManyToOne
-    @JoinColumn(name="artist_id")
-    private Artist artist;
+    private long artistId;
     private String title;
-    @OneToMany(mappedBy="album", cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "albumId")
     private List<Song> songs;
     @Column(length = 2000)
     private String description;
