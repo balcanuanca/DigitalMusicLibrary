@@ -12,6 +12,7 @@ public class Album {
     @Id
     @GeneratedValue
     private Long id;
+    @Embedded
     @ManyToOne
     @JoinColumn(name="artist_id")
     private Artist artist;
@@ -19,5 +20,4 @@ public class Album {
     @OneToMany(mappedBy="album")
     private List<Song> songs;
     private String description;
-
 }

@@ -9,6 +9,7 @@ public class Song {
     @Id
     @GeneratedValue
     private Long id;
+    @Embedded
     @ManyToOne
     @JoinColumn(name="album_id")
     private Album album;

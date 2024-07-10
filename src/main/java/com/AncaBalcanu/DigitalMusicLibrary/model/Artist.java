@@ -15,6 +15,6 @@ public class Artist {
     @GeneratedValue
     private Long id;
     private String name;
-     @OneToMany(mappedBy="artist")
-     private List<Album> albums;
+    @OneToMany(mappedBy="artist")
+    private List<Album> albums;
 }
