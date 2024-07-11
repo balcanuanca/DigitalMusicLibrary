@@ -37,7 +37,7 @@ public class DigitalMusicLibraryApplication {
 	}
 
 	// Read json and write to DB
-	@Bean
+	//@Bean
 	CommandLineRunner runner() {
 		return args -> {
 			ObjectMapper mapper = new ObjectMapper();
