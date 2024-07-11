@@ -2,6 +2,7 @@ package com.AncaBalcanu.DigitalMusicLibrary.service;
 
 import com.AncaBalcanu.DigitalMusicLibrary.data.ArtistRepository;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Artist;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public class ArtistService {
     public List<Artist> findAll(){
         return artistRepository.findAll();
     }
+
+
 }

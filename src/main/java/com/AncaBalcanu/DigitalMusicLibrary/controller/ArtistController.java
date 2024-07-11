@@ -45,6 +45,19 @@ public class ArtistController {
         return new ModelAndView("redirect:http://localhost:8080/artists");
     }
 
+    @GetMapping("/{id}/edit")
+    public String showEditArtistForm(Model model,@PathVariable Long id)
+    {
+        Artist selectedArtist = artistService.findById(id).get();
+        model.addAttribute("artist",selectedArtist);
+        return "artistForm";
+    }
+
+    @PostMapping("/{id}/edit")
+    public ModelAndView updateArtist(Artist artist){
+        artistService.save(artist);
+        return new ModelAndView("redirect:http://localhost:8080/artists");
+    }
 
 
 }

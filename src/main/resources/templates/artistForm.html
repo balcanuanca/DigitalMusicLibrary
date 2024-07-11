@@ -12,6 +12,9 @@
         <label for="name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" th:field="*{name}" aria-describedby="nameHelp">
         <div id="nameHelp" class="form-text">Please insert the name of the artist.</div>
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{albums}" />
+
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

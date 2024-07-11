@@ -14,7 +14,7 @@ public class Artist {
     @Column(name = "artistId")
     private Long id;
     private String name;
-    @OneToMany
+    @OneToMany //(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "artistId")
     private List<Album> albums;
 }
