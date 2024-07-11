@@ -59,5 +59,11 @@ public class ArtistController {
         return new ModelAndView("redirect:http://localhost:8080/artists");
     }
 
+    @GetMapping("/{id}/delete")
+    public ModelAndView deleteArtist(@PathVariable Long id){
+        artistService.delete(id);
+        return new ModelAndView("redirect:http://localhost:8080/artists");
+    }
+
 
 }

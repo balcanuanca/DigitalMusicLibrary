@@ -9,9 +9,14 @@
 <body>
 <!--<form method="post">-->
 <div class="row" th:each="artist : ${artists}">
-    <p class="col-sm" th:text="${artist.name}"></p>
+    <a class="col-sm" style="text-decoration: none; color:black" th:href="@{|/artists/${artist.id}|}">
+            <p th:text="${artist.name}"></p>
+    </a>
     <a class="col-sm" th:href="@{|/artists/${artist.id}/edit|}">
         <button class="btn btn-info"> Edit</button>
+    </a>
+    <a class="col-sm" th:href="@{|/artists/${artist.id}/delete|}">
+        <button class="btn btn-danger"> Delete</button>
     </a>
 </div>
 
