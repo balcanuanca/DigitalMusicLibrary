@@ -18,16 +18,16 @@
   <a class="col-sm" style="text-decoration: none; color:black">
     <p th:text="${song.length}"></p>
   </a>
-  <a class="col-sm" th:href="@{|/albums/${song.id}/edit|}">
+  <a class="col-sm" th:href="@{|/songs/${song.id}/edit|}">
     <button class="btn btn-info"> Edit</button>
   </a>
-  <a class="col-sm" th:href="@{|/albums/${song.id}/delete|}">
+  <a class="col-sm" th:href="@{|/songs/${song.id}/delete|}">
     <button class="btn btn-danger"> Delete</button>
   </a>
 </div>
 <div >
-  <a class="col-sm" th:href="@{|/songs/new/${foundAlbum.id}|}">
-    <button class="btn btn-warning"> Add Album</button>
+  <a class="col-sm" th:href="@{|/songs/${foundAlbum.id}/new|}">
+    <button class="btn btn-warning"> Add Song</button>
   </a>
 </div>
 

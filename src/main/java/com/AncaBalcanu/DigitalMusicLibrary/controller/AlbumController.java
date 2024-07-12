@@ -28,7 +28,7 @@ public class AlbumController {
         return "albumDetails";
     }
 
-    @GetMapping("/new/{artistId}")
+    @GetMapping("/{artistId}/new")
     public String showAddAlbumForm(Model model, @PathVariable Long artistId)
     {
         Album newAlbum = new Album();
@@ -37,7 +37,7 @@ public class AlbumController {
         return "albumForm";
     }
 
-    @PostMapping("/new/{artistId}")
+    @PostMapping("/{artistId}/new")
     public ModelAndView addAlbum(Album album){
         albumService.save(album);
         return new ModelAndView("redirect:http://localhost:8080/artists/{artistId}");
@@ -55,7 +55,7 @@ public class AlbumController {
     public ModelAndView updateAlbum(Album album){
         var artistId = album.getArtistId();
         albumService.save(album);
-        return new ModelAndView("redirect:http://localhost:8080/artists/" + artistId);  ////See where to redirect
+        return new ModelAndView("redirect:http://localhost:8080/artists/" + artistId);
     }
 
     @GetMapping("/{id}/delete")
@@ -63,7 +63,7 @@ public class AlbumController {
         var album =  albumService.findById(id).get();
         var artistId = album.getArtistId();
         albumService.delete(id);
-        return new ModelAndView("redirect:http://localhost:8080/artists/" + artistId); ///See where to redirect
+        return new ModelAndView("redirect:http://localhost:8080/artists/" + artistId);
     }
 
 }
