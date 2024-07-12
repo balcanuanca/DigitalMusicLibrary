@@ -23,14 +23,14 @@ public class ArtistController {
     public String showAllArtists(Model model){
         var artistList = artistService.findAll();
         model.addAttribute("artists", artistList);
-        return "showAllArtists";
+        return "allArtists";
     }
 
     @GetMapping("/{id}")
     public String  showArtistDetails(@PathVariable Long id,Model model){
         Artist foundArtist = artistService.findById(id).get();
         model.addAttribute("foundArtist", foundArtist);
-        return "showArtistDetails";
+        return "artistDetails";
     }
 
     @GetMapping("/new")
