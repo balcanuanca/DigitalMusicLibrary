@@ -2,14 +2,15 @@ package com.AncaBalcanu.DigitalMusicLibrary.controller;
 
 import com.AncaBalcanu.DigitalMusicLibrary.model.Album;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Artist;
+import com.AncaBalcanu.DigitalMusicLibrary.model.SearchParams;
 import com.AncaBalcanu.DigitalMusicLibrary.service.AlbumService;
+import com.AncaBalcanu.DigitalMusicLibrary.service.ArtistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/albums")
@@ -17,7 +18,10 @@ public class AlbumController {
 
     private AlbumService albumService;
 
-    public AlbumController(AlbumService albumService) {
+    private ArtistService artistService;
+
+    public AlbumController(AlbumService albumService, ArtistService artistService) {
+        this.artistService = artistService;
         this.albumService = albumService;
     }
 
@@ -25,6 +29,9 @@ public class AlbumController {
     public String  showAlbumDetails(@PathVariable Long id,Model model){
         Album foundAlbum = albumService.findById(id).get();
         model.addAttribute("foundAlbum", foundAlbum);
+        var songList = foundAlbum.getSongs();
+        model.addAttribute("songs", songList);
+        model.addAttribute("searchParams", new SearchParams());;
         return "albumDetails";
     }
 
@@ -64,6 +71,19 @@ public class AlbumController {
         var artistId = album.getArtistId();
         albumService.delete(id);
         return new ModelAndView("redirect:http://localhost:8080/artists/" + artistId);
+    }
+
+    @GetMapping("/{artistId}/search")
+    public String search(@RequestParam String title, Model model, @PathVariable Long artistId){
+        List<Album> albumList = albumService.findAllByArtistIdAndTitleContaining(artistId,title);
+        model.addAttribute("albums", albumList);
+        model.addAttribute("foundArtist", artistService.findById(artistId).get());
+        return "artistDetails";
+    }
+
+    @PostMapping("/{artistId}/search")
+    public ModelAndView searchArtist(@ModelAttribute SearchParams searchParams){
+        return new ModelAndView("redirect:http://localhost:8080/albums/{artistId}/search?title=" + searchParams.getInput());
     }
 
 }

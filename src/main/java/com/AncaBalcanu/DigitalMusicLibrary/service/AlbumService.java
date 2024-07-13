@@ -3,6 +3,7 @@ package com.AncaBalcanu.DigitalMusicLibrary.service;
 import com.AncaBalcanu.DigitalMusicLibrary.data.AlbumRepository;
 import com.AncaBalcanu.DigitalMusicLibrary.data.SongRepository;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Album;
+import com.AncaBalcanu.DigitalMusicLibrary.model.Artist;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Song;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,9 @@ public class AlbumService {
 
     public Optional<Album> findById(Long id){
         return albumRepository.findById(id);
+    }
+    public List<Album> findAllByArtistIdAndTitleContaining(Long artistId, String title){
+        return albumRepository.findAllByArtistIdAndTitleContaining(artistId,title);
     }
 
     public List<Album> findAll(){

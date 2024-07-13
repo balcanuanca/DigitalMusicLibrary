@@ -1,6 +1,7 @@
 package com.AncaBalcanu.DigitalMusicLibrary.service;
 
 import com.AncaBalcanu.DigitalMusicLibrary.data.SongRepository;
+import com.AncaBalcanu.DigitalMusicLibrary.model.Artist;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Song;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class SongService {
 
     public Optional<Song> findById(Long id){
         return songRepository.findById(id);
+    }
+    public List<Song> findAllByAlbumIdAndTitleContaining(Long albumId, String title){
+        return songRepository.findAllByAlbumIdAndTitleContaining(albumId, title);
     }
 
     public List<Song> findAll(){

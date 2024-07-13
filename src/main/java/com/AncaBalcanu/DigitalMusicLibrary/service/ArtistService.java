@@ -35,6 +35,10 @@ public class ArtistService {
         return artistRepository.findById(id);
     }
 
+    public List<Artist> findAllByNameContaining(String name){
+        return artistRepository.findByNameContaining(name);
+    }
+
     public List<Artist> findAll(){
         return artistRepository.findAll();
     }

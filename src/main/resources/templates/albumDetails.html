@@ -8,10 +8,24 @@
 </head>
 <body>
 
+<!--SEARCH-->
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">Navbar</a>
+    <form class="d-flex" th:object="${searchParams}" method="post" th:action="@{|/songs/${foundAlbum.id}/search|}" th:if="${searchParams}">
+      <input class="form-control search-field" type="text" th:field="*{input}" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+      <!--            <div class="col search-options" th:each="artistName : ${searchParams.artists}">-->
+      <!--                <p th:text="${artistName}"></p>-->
+      <!--            </div>-->
+    </form>
+  </div>
+</nav>
+
 <div th:text="${foundAlbum.title}"></div>
 <div th:text="${foundAlbum.description}"></div>
 
-<div class="row" th:each="song : ${foundAlbum.songs}">
+<div class="row" th:each="song : ${songs}">
   <a class="col-sm" style="text-decoration: none; color:black">
     <p th:text="${song.title}"></p>
   </a>
@@ -27,7 +41,7 @@
 </div>
 <div >
   <a class="col-sm" th:href="@{|/songs/${foundAlbum.id}/new|}">
-    <button class="btn btn-warning"> Add Song</button>
+    <button class="btn btn-warning" th:if="${searchParams}"> Add Song</button>
   </a>
 </div>
 
