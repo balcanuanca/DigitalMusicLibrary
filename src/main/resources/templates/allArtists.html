@@ -8,36 +8,92 @@
     <link th:href="@{/styles/artists.css}" rel="stylesheet" />
 </head>
 <body>
-<!--SEARCH-->
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand">Navbar</a>
-        <form class="d-flex" th:object="${searchParams}" method="post" th:action="@{|/artists/search|}" th:if="${searchParams}">
-            <input class="form-control search-field" type="text" th:field="*{input}" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-<!--            <div class="col search-options" th:each="artistName : ${searchParams.artists}">-->
-<!--                <p th:text="${artistName}"></p>-->
-<!--            </div>-->
-        </form>
+        <a class="navbar-brand">Digital Music Library</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="http://localhost:8080/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8080/artists">Artists</a>
+                </li>
+            </ul>
+            <form class="d-flex" th:object="${searchParams}" method="post" th:action="@{|/artists/search|}" th:if="${searchParams}">
+                <input class="form-control me-2 search-field" type="text" th:field="*{input}" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-dark" type="submit">Search</button>
+                <!--            <div class="col search-options" th:each="artistName : ${searchParams.artists}">-->
+                <!--                <p th:text="${artistName}"></p>-->
+                <!--            </div>-->
+            </form>
+        </div>
     </div>
 </nav>
 
-<div class="row" th:each="artist : ${artists}">
-    <a class="col-sm artist-name" th:href="@{|/artists/${artist.id}|}">
-            <p th:text="${artist.name}"></p>
-    </a>
-    <a class="col-sm" th:href="@{|/artists/${artist.id}/edit|}">
-        <button class="btn btn-info"> Edit</button>
-    </a>
-    <a class="col-sm" th:href="@{|/artists/${artist.id}/delete|}">
-        <button class="btn btn-danger"> Delete</button>
-    </a>
+<h2 class="col-md-9 col-sm-11  mx-auto mt-5">Artists</h2>
+
+<div class="col-md-9 col-sm-11  mx-auto mt-2">
+<table class="table table-hover">
+    <tbody th:each="artist : ${artists}">
+        <td><a class="artist-name" th:href="@{|/artists/${artist.id}|}">
+                <p th:text="${artist.name}"></p>
+            </a>
+        </td>
+        <td>
+            <a  th:href="@{|/artists/${artist.id}/edit|}">
+                <button class="btn btn-info"> Edit
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                    </svg>
+                </button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{|/artists/${artist.id}/delete|}">
+                <button class="btn btn-danger"> Delete
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                    </svg>
+                </button>
+            </a>
+        </td>
+    </tbody>
+</table>
+    <div >
+        <a class="col-sm" th:href="@{/artists/new}">
+            <button class="btn btn-warning" th:if="${searchParams}"> Add Artist
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+            </button>
+        </a>
+    </div>
 </div>
-<div >
-    <a class="col-sm" th:href="@{/artists/new}">
-        <button class="btn btn-warning" th:if="${searchParams}"> Add Artist</button>
-    </a>
-</div>
+<!--<div class="row" th:each="artist : ${artists}">-->
+<!--    <a class="col-sm artist-name" th:href="@{|/artists/${artist.id}|}">-->
+<!--            <p th:text="${artist.name}"></p>-->
+<!--    </a>-->
+<!--    <a class="col-sm" th:href="@{|/artists/${artist.id}/edit|}">-->
+<!--        <button class="btn btn-info"> Edit-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">-->
+<!--                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"></path>-->
+<!--            </svg>-->
+<!--        </button>-->
+<!--    </a>-->
+<!--    <a class="col-sm" th:href="@{|/artists/${artist.id}/delete|}">-->
+<!--        <button class="btn btn-danger"> Delete</button>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!--<div >-->
+<!--    <a class="col-sm" th:href="@{/artists/new}">-->
+<!--        <button class="btn btn-warning" th:if="${searchParams}"> Add Artist</button>-->
+<!--    </a>-->
+<!--</div>-->
 
 </body>
 </html>

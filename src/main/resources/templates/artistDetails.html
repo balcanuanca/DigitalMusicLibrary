@@ -7,18 +7,29 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-
-<!--SEARCH-->
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
-    <form class="d-flex" th:object="${searchParams}" method="post" th:action="@{|/albums/${foundArtist.id}/search|}" th:if="${searchParams}">
-      <input class="form-control search-field" type="text" th:field="*{input}" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-      <!--            <div class="col search-options" th:each="artistName : ${searchParams.artists}">-->
-      <!--                <p th:text="${artistName}"></p>-->
-      <!--            </div>-->
-    </form>
+    <a class="navbar-brand">Digital Music Library</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="http://localhost:8080/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8080/artists">Artists</a>
+        </li>
+      </ul>
+      <form class="d-flex" th:object="${searchParams}" method="post" th:action="@{|/albums/${foundArtist.id}/search|}" th:if="${searchParams}">
+        <input class="form-control me-2 search-field" type="text" th:field="*{input}" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+        <!--            <div class="col search-options" th:each="artistName : ${searchParams.artists}">-->
+        <!--                <p th:text="${artistName}"></p>-->
+        <!--            </div>-->
+      </form>
+    </div>
   </div>
 </nav>
 
