@@ -19,17 +19,31 @@
     Song
 </h1>
 
-<form  th:object="${song}" method="post">
+<form  th:object="${songInterm}" method="post">
     <div class="col-4 mx-auto mt-5 mb-5">
         <label for="title" class="form-label" style="font-size: 25px">Title</label>
         <input type="text" class="form-control" id="title" th:errorclass="is-invalid" th:field="*{title}" aria-describedby="titleHelp">
         <div id="titleHelp" class="form-text fst-italic" style="color: black">Please insert the title of the song.</div>
         <div id="validationTitle" class="invalid-feedback fw-bold" th:errors="*{title}"></div>
 
-        <label for="length" class="form-label" style="font-size: 25px">Length</label>
-        <input type="text" class="form-control" id="length" th:errorclass="is-invalid" th:field="*{length}" aria-describedby="lengthHelp">
-        <div id="lengthHelp" class="form-text fst-italic" style="color: black">Please insert the length of the song.</div>
-        <div id="validationLength" class="invalid-feedback fw-bold" th:errors="*{length}"></div>
+<!--        <label for="length" class="form-label" style="font-size: 25px">Length</label>-->
+<!--        <input type="text" class="form-control" id="length" th:errorclass="is-invalid" th:field="*{length}" aria-describedby="lengthHelp">-->
+<!--        <div id="lengthHelp" class="form-text fst-italic" style="color: black">Please insert the length of the song.</div>-->
+<!--        <div id="validationLength" class="invalid-feedback fw-bold" th:errors="*{length}"></div>-->
+
+        <label class="form-label" style="font-size: 25px">Length</label>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="number" min="0" max="59" class="form-control" th:errorclass="is-invalid" th:field="*{minutes}" aria-describedby="lengthHelp" placeholder="Minutes">
+                <div id="minutesHelp" class="form-text fst-italic" style="color: black">Minutes</div>
+                <div id="validationMinutes" class="invalid-feedback fw-bold" th:errors="*{minutes}"></div>
+            </div>
+            <div class="col">
+                <input type="number" min="0" max="59" class="form-control" th:errorclass="is-invalid" th:field="*{seconds}" aria-describedby="lengthHelp" placeholder="Seconds">
+                <div id="secondsHelp" class="form-text fst-italic" style="color: black">Seconds</div>
+                <div id="validationSeconds" class="invalid-feedback fw-bold" th:errors="*{seconds}"></div>
+            </div>
+        </div>
 
         <input type="hidden" th:field="*{id}" />
 

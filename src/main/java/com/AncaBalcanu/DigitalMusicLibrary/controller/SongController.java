@@ -3,6 +3,7 @@ package com.AncaBalcanu.DigitalMusicLibrary.controller;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Album;
 import com.AncaBalcanu.DigitalMusicLibrary.model.SearchParams;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Song;
+import com.AncaBalcanu.DigitalMusicLibrary.model.SongInterm;
 import com.AncaBalcanu.DigitalMusicLibrary.service.AlbumService;
 import com.AncaBalcanu.DigitalMusicLibrary.service.SongService;
 import jakarta.validation.Valid;
@@ -29,15 +30,25 @@ public class SongController {
     @GetMapping("/{albumId}/new")
     public String showAddSongForm(Model model, @PathVariable Long albumId)
     {
-        Song newSong = new Song();
+        SongInterm newSong = new SongInterm();
         newSong.setAlbumId(albumId);
-        model.addAttribute("song", newSong);
+        model.addAttribute("songInterm", newSong);
         return "songForm";
     }
 
     @PostMapping("/{albumId}/new")
-    public String addSong(@Valid Song song, Errors errors){
+    public String addSong(@Valid SongInterm songInterm, Errors errors){
         if (!errors.hasErrors()) {
+            var song = new Song();
+            song.setAlbumId(songInterm.getAlbumId());
+            song.setId(songInterm.getId());
+            song.setTitle(songInterm.getTitle());
+            if (songInterm.getSeconds()<10) {
+                song.setLength(songInterm.getMinutes() + ":0" + songInterm.getSeconds());
+            }
+            else {
+                song.setLength(songInterm.getMinutes() + ":" + songInterm.getSeconds());
+            }
             songService.save(song);
             return "redirect:http://localhost:8080/albums/{albumId}";
         }
@@ -48,14 +59,32 @@ public class SongController {
     public String showEditSongForm(Model model,@PathVariable Long id)
     {
         Song selectedSong = songService.findById(id).get();
-        model.addAttribute("song",selectedSong);
+        var song = new SongInterm();
+        song.setId(selectedSong.getId());
+        song.setAlbumId(selectedSong.getAlbumId());
+        song.setTitle(selectedSong.getTitle());
+        var length = selectedSong.getLength();
+        String[] parts = length.split(":");
+        song.setMinutes(Integer.parseInt(parts[0]));
+        song.setSeconds(Integer.parseInt(parts[1]));
+        model.addAttribute("songInterm",song);
         return "songForm";
     }
 
     @PostMapping("/{id}/edit")
-    public String updateSong(@Valid Song song, Errors errors){
+    public String updateSong(@Valid SongInterm songInterm, Errors errors){
         if (!errors.hasErrors()) {
-            var albumId = song.getAlbumId();
+            var albumId = songInterm.getAlbumId();
+            var song = new Song();
+            song.setAlbumId(songInterm.getAlbumId());
+            song.setId(songInterm.getId());
+            song.setTitle(songInterm.getTitle());
+            if (songInterm.getSeconds()<10) {
+                song.setLength(songInterm.getMinutes() + ":0" + songInterm.getSeconds());
+            }
+            else {
+                song.setLength(songInterm.getMinutes() + ":" + songInterm.getSeconds());
+            }
             songService.save(song);
             return "redirect:http://localhost:8080/albums/" + albumId;
         }
