@@ -10,15 +10,27 @@
 <body>
 <div th:replace="fragments/topnav :: navbar"></div>
 
-<form  th:object="${album}" method="post">
-    <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="titleHelp">
-        <div id="titleHelp" class="form-text">Please insert the title of the album.</div>
+<h1 class="display-3 col-2 mx-auto mt-5">
+    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-vinyl" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4M4 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0"/>
+        <path d="M9 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+    </svg>
+    Album
+</h1>
 
-        <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" th:field="*{description}" aria-describedby="descriptionHelp">
-        <div id="descriptionHelp" class="form-text">Please insert the description of the album.</div>
+<form  th:object="${album}" method="post">
+    <div class="col-4 mx-auto mt-5 mb-5">
+        <label for="title" class="form-label" style="font-size: 25px">Title</label>
+        <input type="text" class="form-control" id="title" th:errorclass="is-invalid" th:field="*{title}" aria-describedby="titleHelp">
+        <div id="titleHelp" class="form-text fst-italic" style="color: black">Please insert the title of the album.</div>
+        <div id="validationTitle" class="invalid-feedback fw-bold" th:errors="*{title}"></div>
+
+
+        <label for="description" class="form-label" style="font-size: 25px">Description</label>
+        <textarea  type="text" class="form-control" rows="3" id="description" th:errorclass="is-invalid" th:field="*{description}" aria-describedby="descriptionHelp"></textarea>
+        <div id="descriptionHelp" class="form-text fst-italic" style="color: black ">Please insert the description of the album.</div>
+        <div id="validationDescription" class="invalid-feedback fw-bold" th:errors="*{description}"></div>
 
         <input type="hidden" th:field="*{id}" />
 
@@ -26,8 +38,8 @@
 
         <input type="hidden" th:field="*{songs}" />
 
+        <button type="submit" class="btn btn-success">Submit</button>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </body>
 </html>

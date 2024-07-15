@@ -1,7 +1,7 @@
 package com.AncaBalcanu.DigitalMusicLibrary.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.util.List;
@@ -13,6 +13,7 @@ public class Artist {
     @GeneratedValue
     @Column(name = "artistId")
     private Long id;
+    @NotEmpty(message = "Name can not be empty")
     private String name;
     @OneToMany //(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "artistId")

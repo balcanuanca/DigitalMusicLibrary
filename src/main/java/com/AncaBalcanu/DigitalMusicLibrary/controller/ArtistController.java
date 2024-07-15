@@ -4,8 +4,10 @@ import com.AncaBalcanu.DigitalMusicLibrary.model.Album;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Artist;
 import com.AncaBalcanu.DigitalMusicLibrary.model.SearchParams;
 import com.AncaBalcanu.DigitalMusicLibrary.service.ArtistService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,9 +49,12 @@ public class ArtistController {
         return "artistForm";
     }
     @PostMapping("/new")
-    public ModelAndView addArtist(Artist artist){
-        artistService.save(artist);
-        return new ModelAndView("redirect:http://localhost:8080/artists");
+    public String addArtist(@Valid Artist artist, Errors errors){
+        if (!errors.hasErrors()) {
+            artistService.save(artist);
+            return "redirect:http://localhost:8080/artists";
+        }
+        return "artistForm";
     }
 
     @GetMapping("/{id}/edit")
@@ -61,9 +66,12 @@ public class ArtistController {
     }
 
     @PostMapping("/{id}/edit")
-    public ModelAndView updateArtist(Artist artist){
-        artistService.save(artist);
-        return new ModelAndView("redirect:http://localhost:8080/artists");
+    public String updateArtist(@Valid Artist artist, Errors errors){
+        if (!errors.hasErrors()) {
+            artistService.save(artist);
+            return "redirect:http://localhost:8080/artists";
+        }
+        return "artistForm";
     }
 
     @GetMapping("/{id}/delete")

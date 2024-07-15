@@ -5,8 +5,10 @@ import com.AncaBalcanu.DigitalMusicLibrary.model.SearchParams;
 import com.AncaBalcanu.DigitalMusicLibrary.model.Song;
 import com.AncaBalcanu.DigitalMusicLibrary.service.AlbumService;
 import com.AncaBalcanu.DigitalMusicLibrary.service.SongService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,9 +36,12 @@ public class SongController {
     }
 
     @PostMapping("/{albumId}/new")
-    public ModelAndView addSong(Song song){
-        songService.save(song);
-        return new ModelAndView("redirect:http://localhost:8080/albums/{albumId}");
+    public String addSong(@Valid Song song, Errors errors){
+        if (!errors.hasErrors()) {
+            songService.save(song);
+            return "redirect:http://localhost:8080/albums/{albumId}";
+        }
+        return "songForm";
     }
 
     @GetMapping("/{id}/edit")
@@ -48,10 +53,13 @@ public class SongController {
     }
 
     @PostMapping("/{id}/edit")
-    public ModelAndView updateSong(Song song){
-        var albumId = song.getAlbumId();
-        songService.save(song);
-        return new ModelAndView("redirect:http://localhost:8080/albums/" + albumId);
+    public String updateSong(@Valid Song song, Errors errors){
+        if (!errors.hasErrors()) {
+            var albumId = song.getAlbumId();
+            songService.save(song);
+            return "redirect:http://localhost:8080/albums/" + albumId;
+        }
+        return "songForm";
     }
 
     @GetMapping("/{id}/delete")
